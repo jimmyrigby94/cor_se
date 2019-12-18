@@ -1,5 +1,5 @@
 gen_se_data<-function(r, n_min, n_max, prop, ci_p=.95){
-  
+
   crit_p<-1-((1-ci_p)/2)
   
   data.frame(n = n_min:n_max)%>%

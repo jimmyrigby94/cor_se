@@ -6,7 +6,7 @@ library(tidyverse)
 # n_max = maximum sample size
 # prop = proposed sample size
 # ci_p = confidence interval precision (defaults to 95%)
-plot_deriv_r<-function(data, r, n_min, n_max, prop, ci_p=.95){
+plot_deriv_r<-function(data, r, n_min, n_max, prop, ci_p=.95, opt, thresh){
   
   
   # Solves for the critical p used to create the confidence intervals -------
@@ -33,6 +33,14 @@ plot_deriv_r<-function(data, r, n_min, n_max, prop, ci_p=.95){
           panel.background = element_blank(),
           axis.line.x = element_line(),
           axis.line.y = element_line())
+  
+  if(opt){
+    p<-p+
+      geom_point(data = NULL, aes(x = thresh, 
+                                  y = deriv_se(r, thresh),
+                                  text = data$text_deriv[data$n == thresh]))
+  }
+    
   
   # Makes plot interactive and uses the hover labels
   plotly::ggplotly(p, tooltip = c("text"))
